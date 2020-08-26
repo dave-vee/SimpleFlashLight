@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FlashLightApp</string>
+    <string name="torch">Torch</string>
 </resources>

@@ -6,16 +6,18 @@ import android.content.pm.PackageManager
 import android.hardware.camera2.CameraAccessException
 import android.hardware.camera2.CameraManager
 import android.os.Bundle
-import android.widget.ImageButton
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.android.material.snackbar.BaseTransientBottomBar.ANIMATION_MODE_SLIDE
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var btn: ImageButton
+    private lateinit var btn: Button
     private lateinit var torchStatus: TextView
     var isOn: Boolean = false
     private val PERMISSION_CODE = 21
@@ -31,13 +33,17 @@ class MainActivity : AppCompatActivity() {
             val permission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
             if (permission != PackageManager.PERMISSION_GRANTED) {
                 setupPermissions()
-//                val toast = Toast.makeText(this, "Permissions not setup", Toast.LENGTH_LONG)
-//                toast.show()
+
             } else {
                 turnOn()
+                val snackbar =
+                    Snackbar.make(btn, "You clicked on the Torch Button ", Snackbar.LENGTH_SHORT)
+                snackbar.animationMode = ANIMATION_MODE_SLIDE
+                snackbar.show()
             }
         }
     }
+
 
     private fun turnOn() {
         val cameraManager = getSystemService(Context.CAMERA_SERVICE) as CameraManager
